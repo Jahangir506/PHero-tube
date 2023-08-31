@@ -10,8 +10,9 @@ const displayPhTube = (tabButton) => {
 
     tabButton?.slice(0,4).forEach(btn => {
         const tabDiv = document.createElement('div');
+        tabDiv.classList.add('my-3')
         tabDiv.innerHTML = `
-        <button onclick="handleLoadBtn('${btn.category_id}')" class="btn btn-gray mx-2"><a class="tab">${btn.category}</a></button>
+        <button onclick="handleLoadBtn('${btn.category_id}')" class="btn btn-sm md:btn-md lg:btn-md btn-gray mx-2"><a class="tab">${btn.category}</a></button>
         `;
         tabBtn.appendChild(tabDiv)
     })
@@ -50,5 +51,4 @@ const handleLoadBtn = async (id) => {
 } 
 
 handleLoadBtn(1000)
-
 loadPHTube()
