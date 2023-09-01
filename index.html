@@ -67,10 +67,20 @@
             <img src="./image/Logo.png" />
           </div>
           <div class="navbar-center hidden lg:flex">
-            <button class="btn btn-gray">Sort by view</button>
+            <button
+              id="sort-by-view"
+              onclick="handleSortViews()"
+              class="btn btn-gray"
+            >
+              Sort by view
+            </button>
           </div>
           <div class="navbar-end">
-            <a class="btn bg-[#FF1F3D] text-white hover:bg-[#d34954]">Blog</a>
+            <a
+              onclick="handleClickBlog()"
+              class="btn bg-[#FF1F3D] text-white hover:bg-[#d34954]"
+              >Blog</a
+            >
           </div>
         </div>
       </nav>
@@ -80,7 +90,7 @@
     <main>
       <!-- tab button  -->
       <section>
-        <div id="tab-btn" class="tabs  justify-center"></div>
+        <div id="tab-btn" class="tabs justify-center"></div>
       </section>
       <!-- tab button  -->
 
@@ -97,5 +107,6 @@
 
     <!-- javaScript link  -->
     <script src="js/phero-tube.js"></script>
+    <script src="js/blog.js"></script>
   </body>
 </html>

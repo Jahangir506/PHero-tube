@@ -12,7 +12,7 @@ const displayPhTube = (tabButton) => {
         const tabDiv = document.createElement('div');
         tabDiv.classList.add('my-3')
         tabDiv.innerHTML = `
-        <button onclick="handleLoadBtn('${btn.category_id}')" class="btn btn-sm md:btn-md lg:btn-md btn-gray mx-2"><a class="tab">${btn.category}</a></button>
+        <button id="active-btn-color" onclick="handleLoadBtn('${btn.category_id}')" class="btn btn-sm md:btn-md lg:btn-md btn-gray mx-2"><a class="tab">${btn.category}</a></button>
         `;
         tabBtn.appendChild(tabDiv)
     })
@@ -43,17 +43,17 @@ const handleLoadBtn = async (id) => {
         tubeCategoryCardContainer.classList.add('grid')
     }
     
-
     tubeCategories.forEach(tubeCategory => {
        const tubeCategoryDiv = document.createElement('div');
-       tubeCategoryDiv.classList = 'card w-80 bg-gray-200 shadow-xl mx-auto'
+       tubeCategoryDiv.classList = 'card w-80 mx-auto'
        tubeCategoryDiv.innerHTML = `
        
-        <figure class="h-40">
+        <figure class="h-40 relative">
         <img
             src="${tubeCategory.thumbnail}"
             alt="Shoes"
         />
+        <p class="absolute bottom-0 right-6 text-white mb-3 py-0.5 bg-black rounded w-28 text-center text-xs"><span>00</span>hrs <span>00 </span>min ago</p>
         </figure>
         <div class="flex items-center px-4 py-6">
             <img class="w-10 rounded-full mb-5" src="${tubeCategory.authors[0].profile_picture}"/>
@@ -64,9 +64,15 @@ const handleLoadBtn = async (id) => {
             </div>
         </div>
        `;
-       tubeCategoryCardContainer.appendChild(tubeCategoryDiv)
+       tubeCategoryCardContainer.appendChild(tubeCategoryDiv);
+       
     })
 } 
+
+const handleSortViews = () => {
+    const sortByView = document.getElementById('sort-by-view')
+}
+
 
 handleLoadBtn(1000)
 loadPHTube()
