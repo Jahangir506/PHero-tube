@@ -58,8 +58,13 @@ const handleLoadBtn = async (id) => {
         <div class="flex items-center px-4 py-6">
             <img class="w-10 rounded-full mb-5" src="${tubeCategory.authors[0].profile_picture}"/>
             <div class="ml-2">
-                <h5 class="font-semibold my-1">${tubeCategory.title}</h5>
-                <p class="text-sm">${tubeCategory.authors[0].profile_name}<span class="ml-2">${tubeCategory.authors[0].verified}</span></p>
+                <div>
+                    <h5 class="font-semibold my-1">${tubeCategory.title}</h5>
+                <div class="flex items-center">
+                    <p class="text-sm">${tubeCategory.authors[0].profile_name}<span class="ml-2"></span></p>
+                    <p>${tubeCategory.authors[0].verified === true ? '<img class="w-4" src="image/check.png"/>' : '' }</p>
+                </div>
+                </div>
                 <p class="mt-[-3px]"><small>${tubeCategory.others.views} views</small></p>
             </div>
         </div>
