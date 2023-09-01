@@ -23,8 +23,26 @@ const handleLoadBtn = async (id) => {
     const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${id}`)
     const data = await res.json()
     const tubeCategories = data.data;
-    
+
     const tubeCategoryCardContainer = document.getElementById('tube-category-card-container')
+    tubeCategoryCardContainer.innerHTML = '';
+
+    if(tubeCategories.length === 0){
+        const dataNotFound = document.createElement('div');
+        tubeCategoryCardContainer.classList.remove('grid')
+        dataNotFound.innerHTML = `
+            <div class="w-52 mx-auto my-32">
+                <div class="flex justify-center" >
+                    <img class="w-24" src="image/icon.png"/>
+                </div>
+                <p class="text-center font-bold my-4">Oops!! Sorry, There is no <br/> content here</p>
+            </div>
+        `;
+        tubeCategoryCardContainer.appendChild(dataNotFound);
+    }else{
+        tubeCategoryCardContainer.classList.add('grid')
+    }
+    
 
     tubeCategories.forEach(tubeCategory => {
        const tubeCategoryDiv = document.createElement('div');
