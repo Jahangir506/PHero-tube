@@ -18,6 +18,8 @@ const displayPhTube = (tabButton) => {
     })
 }
 
+
+
 const handleLoadBtn = async (id) => {
 
     const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${id}`)
@@ -43,7 +45,16 @@ const handleLoadBtn = async (id) => {
         tubeCategoryCardContainer.classList.add('grid')
     }
     
+
+
     tubeCategories.forEach(tubeCategory => {
+
+        const secondT = `${tubeCategory.others.posted_date}`;
+        const minuteToHours = Math.floor(secondT / 60)
+    
+        const hours = Math.floor(minuteToHours / 60)
+        const remainingMinutes  = minuteToHours % 60;
+
        const tubeCategoryDiv = document.createElement('div');
        tubeCategoryDiv.classList = 'card w-80 mx-auto'
        tubeCategoryDiv.innerHTML = `
@@ -53,7 +64,7 @@ const handleLoadBtn = async (id) => {
             src="${tubeCategory.thumbnail}"
             alt="Shoes"
         />
-        <p class="absolute bottom-0 right-6 text-white mb-3 py-0.5 bg-black rounded w-28 text-center text-xs"><span>00</span>hrs <span>00 </span>min ago</p>
+        <p class="absolute bottom-0 right-6 text-white mb-3 py-0.5 bg-black rounded w-28 text-center text-xs"><span>${hours}</span>hrs <span>${remainingMinutes}</span>min ago</p>
         </figure>
         <div class="flex items-center px-4 py-6">
             <img class="w-10 rounded-full mb-5" src="${tubeCategory.authors[0].profile_picture}"/>
@@ -74,10 +85,30 @@ const handleLoadBtn = async (id) => {
     })
 } 
 
+
+
+
+
+
+
+
+
+
+
 const handleSortViews = () => {
     const sortByView = document.getElementById('sort-by-view')
 }
 
-
 handleLoadBtn(1000)
 loadPHTube()
+
+// const secondT = 21908;
+// const minuteToHours = Math.floor(secondT / 60)
+
+// const time = (minuteToHours) => {
+//     const hours = Math.floor(minuteToHours / 60)
+//     const remainingMinutes  = minuteToHours % 60;
+
+//     // return `${hours} hours ${remainingMinutes} minute`
+//     return [hours,remainingMinutes]
+// }
