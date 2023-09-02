@@ -1,10 +1,10 @@
 let tubeCategories = []
-let descending = true;
 
 const loadPHTube = async () => {
     const res = await fetch(`https://openapi.programming-hero.com/api/videos/categories`)
     const data = await res.json()
     const phTube = data.data;
+
     const tabBtn = document.getElementById('tab-btn');
 
     phTube?.slice(0,4).forEach(btn => {
@@ -23,7 +23,6 @@ const loadPHTube = async () => {
     const data = await res.json()
     tubeCategories = data.data;
     tubeCategories.sort((a, b) => parseInt(a.others.views) - parseInt(b.others.views))
-    console.log(tubeCategories);
     displayShowNews()
  }
 
@@ -35,11 +34,11 @@ const displayShowNews = () => {
         const dataNotFound = document.createElement('div');
         categoryNewsContainer.classList.remove('grid')
         dataNotFound.innerHTML = `
-            <div class="w-52 mx-auto my-32">
+            <div class="w-80 mx-auto my-32">
                 <div class="flex justify-center" >
-                    <img class="w-24" src="image/icon.png"/>
+                    <img class="w-28" src="image/icon.png"/>
                 </div>
-                <p class="text-center font-bold my-4">Oops!! Sorry, There is no <br/> content here</p>
+                <p class="text-center font-extrabold text-xl my-4">Oops!! Sorry, There is no <br/> content here</p>
             </div>
         `;
         categoryNewsContainer.appendChild(dataNotFound);
@@ -92,13 +91,11 @@ const displayShowNews = () => {
 const sortViews = () => {
 
     tubeCategories.sort((a, b) => parseInt(b.others.views) - parseInt(a.others.views))
-
     displayShowNews()
 }
 
 const sortBtn = document.getElementById('sort-btn');
 sortBtn.addEventListener('click', () => {
-    descending = !descending;
     sortViews()
 })
   
