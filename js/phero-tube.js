@@ -68,10 +68,12 @@ const displayShowNews = () => {
         <p class="absolute bottom-0 right-6 text-white mb-3  bg-black rounded w-28 text-center text-xs">${totalTime}</p>
         </figure>
         <div class="flex items-center px-4 py-6">
-            <div>
-                <img class="w-10 rounded-full mb-5" src="${tubeCategory.authors[0].profile_picture}"/>
+            <div class="avatar mb-4">
+                <div class="w-10 rounded-full">
+                    <img src="${tubeCategory.authors[0].profile_picture}"/>
+                </div>
             </div>
-            <div class="ml-2">
+            <div class="ml-3">
                 <div>
                     <h5 class="font-semibold my-1">${tubeCategory.title}</h5>
                 <div class="flex items-center">
