@@ -1,4 +1,4 @@
-// let tubeCategories = []
+let tubeCategories = []
 let descending = true;
 
 const loadPHTube = async () => {
@@ -22,7 +22,8 @@ const loadPHTube = async () => {
     const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${categoriesId}`)
     const data = await res.json()
     tubeCategories = data.data;
-    tubeCategories.sort((a, b) => parseFloat(a.others.views) - parseFloat(b.others.views))
+    tubeCategories.sort((a, b) => parseInt(a.others.views) - parseInt(b.others.views))
+    console.log(tubeCategories);
     displayShowNews()
  }
 
@@ -67,7 +68,9 @@ const displayShowNews = () => {
         <p class="absolute bottom-0 right-6 text-white mb-3  bg-black rounded w-28 text-center text-xs">${totalTime}</p>
         </figure>
         <div class="flex items-center px-4 py-6">
-            <img class="w-10 rounded-full mb-5" src="${tubeCategory.authors[0].profile_picture}"/>
+            <div>
+                <img class="w-10 rounded-full mb-5" src="${tubeCategory.authors[0].profile_picture}"/>
+            </div>
             <div class="ml-2">
                 <div>
                     <h5 class="font-semibold my-1">${tubeCategory.title}</h5>
@@ -85,11 +88,9 @@ const displayShowNews = () => {
 } 
 
 const sortViews = () => {
-    if(descending){
-        tubeCategories.sort((a, b) => parseFloat(a.others.views) - parseFloat(b.others.views))
-    }else{
-        tubeCategories.sort((a, b) => parseFloat(b.others.views) - parseFloat(a.others.views))
-    }
+
+    tubeCategories.sort((a, b) => parseInt(b.others.views) - parseInt(a.others.views))
+
     displayShowNews()
 }
 
