@@ -1,36 +1,38 @@
+// let tubeCategories = []
+let descending = true;
+
 const loadPHTube = async () => {
     const res = await fetch(`https://openapi.programming-hero.com/api/videos/categories`)
     const data = await res.json()
     const phTube = data.data;
-    displayPhTube(phTube);
-}
-
-const displayPhTube = (tabButton) => {
     const tabBtn = document.getElementById('tab-btn');
 
-    tabButton?.slice(0,4).forEach(btn => {
+    phTube?.slice(0,4).forEach(btn => {
+
         const tabDiv = document.createElement('div');
         tabDiv.classList.add('my-3')
         tabDiv.innerHTML = `
-        <button id="active-btn-color" onclick="handleLoadBtn('${btn.category_id}')" class="btn btn-sm md:btn-md lg:btn-md btn-gray mx-2"><a class="tab">${btn.category}</a></button>
+        <button id="active-btn-color" onclick="displayLoadCategory('${btn.category_id}')" class="btn btn-sm md:btn-md lg:btn-md btn-gray hover:bg-[#FF1F3D] mx-2"><a class="tab">${btn.category}</a></button>
         `;
         tabBtn.appendChild(tabDiv)
     })
 }
 
-const handleLoadBtn = async (id) => {
-
-    const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${id}`)
+ const displayLoadCategory = async (categoriesId = '1000') => {
+    const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${categoriesId}`)
     const data = await res.json()
-    const tubeCategories = data.data;
-    // console.log(tubeCategories);
+    tubeCategories = data.data;
+    tubeCategories.sort((a, b) => parseFloat(a.others.views) - parseFloat(b.others.views))
+    displayShowNews()
+ }
 
-    const tubeCategoryCardContainer = document.getElementById('tube-category-card-container')
-    tubeCategoryCardContainer.innerHTML = '';
+const displayShowNews = () => {
+    const categoryNewsContainer = document.getElementById('category-news-container')
+    categoryNewsContainer.innerHTML = '';
 
     if(tubeCategories.length === 0){
         const dataNotFound = document.createElement('div');
-        tubeCategoryCardContainer.classList.remove('grid')
+        categoryNewsContainer.classList.remove('grid')
         dataNotFound.innerHTML = `
             <div class="w-52 mx-auto my-32">
                 <div class="flex justify-center" >
@@ -39,15 +41,13 @@ const handleLoadBtn = async (id) => {
                 <p class="text-center font-bold my-4">Oops!! Sorry, There is no <br/> content here</p>
             </div>
         `;
-        tubeCategoryCardContainer.appendChild(dataNotFound);
+        categoryNewsContainer.appendChild(dataNotFound);
     }else{
-        tubeCategoryCardContainer.classList.add('grid')
+        categoryNewsContainer.classList.add('grid')
     }
     
-
     tubeCategories.forEach(tubeCategory => {
-        handleSortViews(tubeCategory);
-
+        
         const secondT = parseInt(tubeCategory?.others.posted_date);
         const hours = Math.floor(secondT / 3600)
         const remainingMinutes  = Math.floor((secondT % 3600) / 60);
@@ -80,21 +80,24 @@ const handleLoadBtn = async (id) => {
             </div>
         </div>
        `;
-       tubeCategoryCardContainer.appendChild(tubeCategoryDiv);
+       categoryNewsContainer.appendChild(tubeCategoryDiv);
     })
 } 
 
-
-
-const handleSortViews = async (id) => {
-   const views = id?.others?.views.slice(0,3)
-   const view = parseFloat(views)
-   view.sort((a, b) => {
-        const v = a - b
-   })
-
+const sortViews = () => {
+    if(descending){
+        tubeCategories.sort((a, b) => parseFloat(a.others.views) - parseFloat(b.others.views))
+    }else{
+        tubeCategories.sort((a, b) => parseFloat(b.others.views) - parseFloat(a.others.views))
+    }
+    displayShowNews()
 }
 
-handleLoadBtn(1000)
-// handleSortViews()
+const sortBtn = document.getElementById('sort-btn');
+sortBtn.addEventListener('click', () => {
+    descending = !descending;
+    sortViews()
+})
+  
+displayLoadCategory()
 loadPHTube()
