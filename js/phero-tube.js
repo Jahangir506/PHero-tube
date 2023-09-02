@@ -18,13 +18,12 @@ const displayPhTube = (tabButton) => {
     })
 }
 
-
-
 const handleLoadBtn = async (id) => {
 
     const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${id}`)
     const data = await res.json()
     const tubeCategories = data.data;
+    // console.log(tubeCategories);
 
     const tubeCategoryCardContainer = document.getElementById('tube-category-card-container')
     tubeCategoryCardContainer.innerHTML = '';
@@ -46,17 +45,18 @@ const handleLoadBtn = async (id) => {
     }
     
 
-
     tubeCategories.forEach(tubeCategory => {
+        handleSortViews(tubeCategory);
 
-        const secondT = `${tubeCategory.others.posted_date}`;
-        const minuteToHours = Math.floor(secondT / 60)
-    
-        const hours = Math.floor(minuteToHours / 60)
-        const remainingMinutes  = minuteToHours % 60;
+        const secondT = parseInt(tubeCategory?.others.posted_date);
+        const hours = Math.floor(secondT / 3600)
+        const remainingMinutes  = Math.floor((secondT % 3600) / 60);
+
+        const totalTime = secondT?`${hours}hrs ${remainingMinutes} min ago`: '';
 
        const tubeCategoryDiv = document.createElement('div');
        tubeCategoryDiv.classList = 'card w-80 mx-auto'
+
        tubeCategoryDiv.innerHTML = `
        
         <figure class="h-40 relative">
@@ -64,7 +64,7 @@ const handleLoadBtn = async (id) => {
             src="${tubeCategory.thumbnail}"
             alt="Shoes"
         />
-        <p class="absolute bottom-0 right-6 text-white mb-3 py-0.5 bg-black rounded w-28 text-center text-xs"><span>${hours}</span>hrs <span>${remainingMinutes}</span>min ago</p>
+        <p class="absolute bottom-0 right-6 text-white mb-3  bg-black rounded w-28 text-center text-xs">${totalTime}</p>
         </figure>
         <div class="flex items-center px-4 py-6">
             <img class="w-10 rounded-full mb-5" src="${tubeCategory.authors[0].profile_picture}"/>
@@ -81,34 +81,20 @@ const handleLoadBtn = async (id) => {
         </div>
        `;
        tubeCategoryCardContainer.appendChild(tubeCategoryDiv);
-       
     })
 } 
 
 
 
+const handleSortViews = async (id) => {
+   const views = id?.others?.views.slice(0,3)
+   const view = parseFloat(views)
+   view.sort((a, b) => {
+        const v = a - b
+   })
 
-
-
-
-
-
-
-
-const handleSortViews = () => {
-    const sortByView = document.getElementById('sort-by-view')
 }
 
 handleLoadBtn(1000)
+// handleSortViews()
 loadPHTube()
-
-// const secondT = 21908;
-// const minuteToHours = Math.floor(secondT / 60)
-
-// const time = (minuteToHours) => {
-//     const hours = Math.floor(minuteToHours / 60)
-//     const remainingMinutes  = minuteToHours % 60;
-
-//     // return `${hours} hours ${remainingMinutes} minute`
-//     return [hours,remainingMinutes]
-// }
